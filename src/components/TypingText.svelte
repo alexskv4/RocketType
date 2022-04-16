@@ -12,7 +12,6 @@
     let totalTime;
     let wpm;
     let currentText;
-    let inputColor = "white";
     let inputClass= "valid";
 
     function onPopupClose () {
