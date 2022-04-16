@@ -1,21 +1,23 @@
 <script>
     import FinishedModal from "./FinishedModal.svelte";
 
-    //export let quote = "We all get lost once in a while, sometimes by choice, sometimes due to forces beyond our control. When we learn what it is our soul needs to learn, the path presents itself. Sometimes we see the way out but wander further and deeper despite ourselves; the fear, the anger or the sadness preventing us returning. Sometimes we prefer to be lost and wandering, sometimes it's easier. Sometimes we find our own way out. But regardless, always, we are found."
+    export let quote = "We all get lost once in a while, sometimes by choice, sometimes due to forces beyond our control. When we learn what it is our soul needs to learn, the path presents itself. Sometimes we see the way out but wander further and deeper despite ourselves; the fear, the anger or the sadness preventing us returning. Sometimes we prefer to be lost and wandering, sometimes it's easier. Sometimes we find our own way out. But regardless, always, we are found."
     //export let quote = "The quick brown fox jumped over the lazy dog."
-    export let quote = "They don't know that we know they know we know.";
+    //export let quote = "They don't know that we know they know we know.";
+    //export let quote = "abc";
 
     let showPopup = false;
     let startTime;
     let endTime;
     let totalTime;
     let wpm;
-
+    let currentText;
+    let inputColor = "white";
+    let inputClass= "valid";
 
     function onPopupClose () {
         showPopup = false;
-        var inputBox = document.getElementById("typingInput");
-        inputBox.value = "";
+        currentText = "";
     }
     
     function millisecToWpm () {
@@ -28,27 +30,23 @@
     }
 
     function checkValid() {
-        var inputBox = document.getElementById("typingInput");
-        console.log(inputBox.value)
-        if (inputBox.value.length == 1) {
+        if (currentText.length == 1) {
             startTime = new Date().getTime();
         }
-        if (inputBox.value == quote) {
+        if (currentText == quote) {
             endTime = new Date().getTime();
             totalTime = endTime - startTime;
             millisecToWpm();
             showPopup = true;
             
         }
-        else if ( inputBox.value != quote.substring(0, inputBox.value.length)) {
-            inputBox.style.backgroundColor = "coral";
+        else if ( currentText != quote.substring(0, currentText.length)) {
+            inputClass = "invalid";
         }
         else {
-            inputBox.style.backgroundColor = "white";
+            inputClass = "valid";
         }
     }
-
-
 
 </script>
 
@@ -58,18 +56,24 @@
             <p>{quote}</p>
         </div>
 		<div class="row">
-            <input id="typingInput" on:input={(e) => checkValid()}/>
+            <input class={inputClass} id="typingInput" bind:value={currentText} on:input={(e) => checkValid()}/>
         </div>
 	</div>
 </main>
 <FinishedModal wpm={wpm} open={showPopup} onClosed={() => onPopupClose()}/>
 
 <style>
+    input.invalid {
+        background-color: coral;
+    }
+    input.valid {
+        background-color: white;
+    }
     .typingBox {
-		padding-top: 50px;
+		padding-top: 10%;
 	}
     #typingInput {
-        font-size: larger;
+        font-size: larger;       
     }
     p {
         font-size: x-large;
