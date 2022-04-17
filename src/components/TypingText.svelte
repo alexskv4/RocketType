@@ -1,10 +1,10 @@
 <script>
     import FinishedModal from "./FinishedModal.svelte";
 
-    //export let quote = "We all get lost once in a while, sometimes by choice, sometimes due to forces beyond our control. When we learn what it is our soul needs to learn, the path presents itself. Sometimes we see the way out but wander further and deeper despite ourselves; the fear, the anger or the sadness preventing us returning. Sometimes we prefer to be lost and wandering, sometimes it's easier. Sometimes we find our own way out. But regardless, always, we are found."
-    export let quote = "The quick brown fox jumped over the lazy dog."
-    //export let quote = "They don't know that we know they know we know.";
-    //export let quote = "abc";
+    //let quote = "We all get lost once in a while, sometimes by choice, sometimes due to forces beyond our control. When we learn what it is our soul needs to learn, the path presents itself. Sometimes we see the way out but wander further and deeper despite ourselves; the fear, the anger or the sadness preventing us returning. Sometimes we prefer to be lost and wandering, sometimes it's easier. Sometimes we find our own way out. But regardless, always, we are found."
+    //let quote = "The quick brown fox jumped over the lazy dog."
+    //let quote = "They don't know that we know they know we know.";
+    //let quote = "abc";
 
     let showPopup = false;
     let startTime;
@@ -15,20 +15,34 @@
     let inputClass= "valid";
     let validText="";
     let invalidText="";
-    let untypedText=quote;
+    let untypedText="";
+    let quote = "";
+
+    function randomQuote () {
+        fetch("/quotes.json")
+        .then(response => response.json())
+        .then(json => {
+            var numQuotes = json.length
+            console.log(numQuotes)
+            var randomIndex = parseInt((Math.random() * (numQuotes - 1)));
+            console.log(randomIndex)
+            
+            quote = json[randomIndex].quoteText;
+            untypedText = quote;
+        });
+    }
 
     function onPopupClose () {
         showPopup = false;
+        randomQuote();
         reset();
     }
     
     function reset () {
-
         currentText = "";
         validText = "";
         invalidText = "";
         untypedText = quote;
-
     }
 
     function millisecToWpm () {
@@ -49,8 +63,8 @@
             totalTime = endTime - startTime;
             millisecToWpm();
             showPopup = true;
-            
         }
+
         validText = "";
         invalidText = "";
         untypedText = quote;
@@ -68,19 +82,8 @@
             }
             untypedText = quote.substring(i+1);
         }
-
-
-        // else if ( currentText != quote.substring(0, currentText.length)) {
-        //     inputClass = "invalid";
-        //     invalidText += untypedText.substring(0, 1);
-        // }
-        // else {
-        //     inputClass = "valid";
-        //     validText += untypedText.substring(0, 1);
-        // }
-        // untypedText = untypedText.substring(1);
     }
-
+    randomQuote();
 </script>
 
 <main class="container typingBox">
@@ -101,10 +104,8 @@
         background-color: pink;
     }
     span.valid {
-
         color: green;
         background-color: lightgreen;
-
     }
     input.invalid {
         background-color: coral;

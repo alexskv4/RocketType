@@ -17,9 +17,7 @@
 
 
 {#if open}
-  <div class="modal" tabindex="-1"
-    role="dialog" aria-labelledby="sampleModalLabel" aria-hidden={false}
-  >
+  <div class="modal" tabindex="-1" role="dialog" aria-labelledby="sampleModalLabel" aria-hidden={false}>
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
