@@ -5,11 +5,11 @@
     export let onClosed;
     export let wpm;
 
-    const modalClose = () => {
+    const modalClose = (retry) => {
 
         open = false;
         if (onClosed) {
-            onClosed();
+            onClosed(retry);
         }
     }
 
@@ -25,8 +25,8 @@
         </div>
         <div class="modal-body">You typed {wpm} WPM.</div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal" on:click={modalClose}>Try again</button>
-          <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal" on:click={modalClose}>Next Race</button>
+          <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal" on:click={() => modalClose(true)}>Try again</button>
+          <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal" on:click={() => modalClose(false)}>Next Race</button>
         </div>
       </div>
     </div>
@@ -42,13 +42,13 @@
     justify-content: center;
   }
   .modal-content {
-    height: 60%;
-    width: 80%;
+    height: 50%;
+    width: 70%;
   }
   .modal-dialog {
-    height: 60%;
-    width: 80%;
-    max-width: 80%;
+    height: 50%;
+    width: 70%;
+    max-width: 70%;
     align-content: center;
     justify-content: center;
   }

@@ -32,9 +32,11 @@
         });
     }
 
-    function onPopupClose () {
+    function onPopupClose (retry) {
         showPopup = false;
-        randomQuote();
+        if(!retry){
+            randomQuote();
+        }
         reset();
     }
     
@@ -96,7 +98,7 @@
         </div>
 	</div>
 </main>
-<FinishedModal wpm={wpm} open={showPopup} onClosed={() => onPopupClose()}/>
+<FinishedModal wpm={wpm} open={showPopup} onClosed={(retry) => onPopupClose(retry)}/>
 
 <style>
     span.invalid {
