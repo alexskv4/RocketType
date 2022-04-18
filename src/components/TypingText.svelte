@@ -45,6 +45,7 @@
         validText = "";
         invalidText = "";
         untypedText = quote;
+        inputClass = "valid";
     }
 
     function millisecToWpm () {
@@ -96,11 +97,21 @@
 		<div class="row">
             <input class={inputClass} id="typingInput" bind:value={currentText} on:input={(e) => checkValid()}/>
         </div>
+        <div class="row buttonRow">
+            <button class="btn btn-primary btn-lg nextButton" on:click={() => {reset(); randomQuote();}}>Next Quote</button>
+        </div>
 	</div>
 </main>
 <FinishedModal wpm={wpm} open={showPopup} onClosed={(retry) => onPopupClose(retry)}/>
 
 <style>
+    .buttonRow {
+        justify-content: center;
+    }
+    .nextButton {
+        margin-top: 10px;
+        max-width: 20%;
+    }
     span.invalid {
         color: red;
         background-color: pink;
