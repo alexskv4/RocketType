@@ -17,6 +17,7 @@
     let invalidText="";
     let untypedText="";
     let quote = "";
+    let percentageTyped = 0;
 
     function randomQuote () {
         fetch("/quotes.json")
@@ -46,6 +47,7 @@
         invalidText = "";
         untypedText = quote;
         inputClass = "valid";
+        percentageTyped = 0;
     }
 
     function millisecToWpm () {
@@ -85,13 +87,17 @@
             }
             untypedText = quote.substring(i+1);
         }
+        percentageTyped = parseInt(validText.length / quote.length * 100);
     }
     randomQuote();
 </script>
 
 <main class="container typingBox">
 	<div class="col">
-		<div class="row">
+        <div class="row progress">
+            <div class="progress-bar" style="width: {percentageTyped}%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+		<div class="row quote">
             <p><span class="valid">{validText}</span><span class="invalid">{invalidText}</span>{untypedText}</p>
         </div>
 		<div class="row">
@@ -105,6 +111,9 @@
 <FinishedModal wpm={wpm} open={showPopup} onClosed={(retry) => onPopupClose(retry)}/>
 
 <style>
+    .quote {
+        margin-top: 10px;
+    }
     .buttonRow {
         justify-content: center;
     }
