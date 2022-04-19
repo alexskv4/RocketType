@@ -19,6 +19,14 @@
     let quote = "";
     let percentageTyped = 0;
 
+    function checkForTab(e) {
+        if (e.key == "Tab") {
+            e.preventDefault();
+            reset();
+            randomQuote();
+        }
+    }
+
     function randomQuote () {
         fetch("/quotes.json")
         .then(response => response.json())
@@ -101,7 +109,7 @@
             <p><span class="valid">{validText}</span><span class="invalid">{invalidText}</span>{untypedText}</p>
         </div>
 		<div class="row">
-            <input class={inputClass} id="typingInput" bind:value={currentText} on:input={(e) => checkValid()}/>
+            <input class={inputClass} id="typingInput" bind:value={currentText} on:keydown={(e) => checkForTab(e)} on:input={() => checkValid()}/>
         </div>
         <div class="row buttonRow">
             <button class="btn btn-primary btn-lg nextButton" on:click={() => {reset(); randomQuote();}}>Next Quote</button>
