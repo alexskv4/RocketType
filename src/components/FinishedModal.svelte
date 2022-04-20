@@ -23,13 +23,13 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title" id="sampleModalLabel">Race Results</h1>
+          <h1 class="modal-title">Race Results</h1>
         </div>
         <div class="modal-body">
 
-        <div class="col">
+        <div class="col textCol">
           <div class="row">
-            You typed {wpm} WPM.
+            Speed: {wpm} WPM
           </div>
           <div class="row">
             # of errors: {errorCount}
@@ -53,6 +53,9 @@
 {/if}
 
 <style>
+  .textCol {
+    margin-left: 1em;
+  }
   .modal {
     display: block;
     justify-content: center;
