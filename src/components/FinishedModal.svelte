@@ -32,7 +32,7 @@
             Speed: {wpm} WPM
           </div>
           <div class="row">
-            # of errors: {errorCount}
+            Number of errors: {errorCount}
           </div>
           <div class="row">
             Accuracy: {percentageAccuracy}%
@@ -72,7 +72,7 @@
     justify-content: center;
   }
   .modal-footer {
-    justify-content: space-between;
+    justify-content: right;
   }
   .modal-body {
     display: flex;
