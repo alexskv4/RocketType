@@ -17,6 +17,7 @@
     let untypedText="";
     let quote = "";
     let percentageTyped = 0;
+    let hasError = false;
 
     let wpm;
     let errorCount = 0;
@@ -83,7 +84,7 @@
             percentageAccuracy = (100 - errorCount / quote.length * 100).toFixed(1);
             showPopup = true;
         }
-
+        
         validText = "";
         invalidText = "";
         untypedText = quote;
@@ -97,12 +98,19 @@
                 invalidText += quote.substring(i, currentText.length);
                 untypedText = quote.substring(currentText.length )
                 inputClass = "invalid";
-                errorCount += 1;
+                if(!hasError) {
+                    errorCount += 1;
+                }
+                hasError = true;
                 break;
             }
             untypedText = quote.substring(i+1);
         }
         percentageTyped = parseInt(validText.length / quote.length * 100);
+        
+        if (invalidText.length == 0) {
+            hasError = false;
+        }
     }
     randomQuote();
 </script>
@@ -116,7 +124,7 @@
             <p><span class="valid">{validText}</span><span class="invalid">{invalidText}</span>{untypedText}</p>
         </div>
 		<div class="row">
-            <input class={inputClass} id="typingInput" bind:value={currentText} on:keydown={(e) => checkForTab(e)} on:input={() => checkValid()}/>
+            <input class={inputClass} id="typingInput" bind:value={currentText} on:paste={(e) => e.preventDefault()} on:keydown={(e) => checkForTab(e)} on:input={() => checkValid()}/>
         </div>
         <div class="row buttonRow">
             <button class="btn btn-primary btn-lg nextButton" on:click={() => {reset(); randomQuote();}}>Next Quote</button>
