@@ -4,6 +4,8 @@
     export let showBackdrop = true;
     export let onClosed;
     export let wpm;
+    export let errorCount;
+    export let percentageAccuracy;
 
     const modalClose = (retry) => {
 
@@ -23,7 +25,21 @@
         <div class="modal-header">
           <h1 class="modal-title" id="sampleModalLabel">Race Results</h1>
         </div>
-        <div class="modal-body">You typed {wpm} WPM.</div>
+        <div class="modal-body">
+
+        <div class="col">
+          <div class="row">
+            You typed {wpm} WPM.
+          </div>
+          <div class="row">
+            # of errors: {errorCount}
+          </div>
+          <div class="row">
+            Accuracy: {percentageAccuracy}%
+          </div>
+        </div>
+
+        </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal" on:click={() => modalClose(true)}>Try again</button>
           <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal" on:click={() => modalClose(false)}>Next Race</button>

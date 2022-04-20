@@ -10,7 +10,6 @@
     let startTime;
     let endTime;
     let totalTime;
-    let wpm;
     let currentText;
     let inputClass= "valid";
     let validText="";
@@ -18,6 +17,10 @@
     let untypedText="";
     let quote = "";
     let percentageTyped = 0;
+
+    let wpm;
+    let errorCount = 0;
+    let percentageAccuracy;
 
     function checkForTab(e) {
         if (e.key == "Tab") {
@@ -56,6 +59,8 @@
         untypedText = quote;
         inputClass = "valid";
         percentageTyped = 0;
+        errorCount = 0;
+        percentageAccuracy=0;
     }
 
     function millisecToWpm () {
@@ -75,6 +80,7 @@
             endTime = new Date().getTime();
             totalTime = endTime - startTime;
             millisecToWpm();
+            percentageAccuracy = (100 - errorCount / quote.length * 100).toFixed(1);
             showPopup = true;
         }
 
@@ -91,6 +97,7 @@
                 invalidText += quote.substring(i, currentText.length);
                 untypedText = quote.substring(currentText.length )
                 inputClass = "invalid";
+                errorCount += 1;
                 break;
             }
             untypedText = quote.substring(i+1);
@@ -116,7 +123,7 @@
         </div>
 	</div>
 </main>
-<FinishedModal wpm={wpm} open={showPopup} onClosed={(retry) => onPopupClose(retry)}/>
+<FinishedModal percentageAccuracy={percentageAccuracy} errorCount={errorCount} wpm={wpm} open={showPopup} onClosed={(retry) => onPopupClose(retry)}/>
 
 <style>
     .quote {
