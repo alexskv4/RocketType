@@ -24,6 +24,10 @@
     let errorCount = 0;
     let percentageAccuracy;
 
+    function focusEl (element) {
+        element.focus();
+    }
+
     function checkForTab(e) {
         if (e.key == "Tab") {
             e.preventDefault();
@@ -126,7 +130,7 @@
             <p><span class="valid">{validText}</span><span class="invalid">{invalidText}</span>{untypedText}</p>
         </div>
 		<div class="row">
-            <input autofocus bind:this={inputElement} class={inputClass} id="typingInput" bind:value={currentText} on:paste={(e) => e.preventDefault()} on:keydown={(e) => checkForTab(e)} on:input={() => checkValid()}/>
+            <input use:focusEl bind:this={inputElement} class={inputClass} id="typingInput" bind:value={currentText} on:paste={(e) => e.preventDefault()} on:keydown={(e) => checkForTab(e)} on:input={() => checkValid()}/>
         </div>
         <div class="row buttonRow">
             <button class="btn btn-primary btn-lg nextButton" on:click={() => {reset(); randomQuote();}}>Next Quote</button>
