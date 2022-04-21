@@ -18,6 +18,7 @@
     let quote = "";
     let percentageTyped = 0;
     let hasError = false;
+    let inputElement;
 
     let wpm;
     let errorCount = 0;
@@ -61,7 +62,8 @@
         inputClass = "valid";
         percentageTyped = 0;
         errorCount = 0;
-        percentageAccuracy=0;
+        percentageAccuracy = 0;
+        inputElement.focus();
     }
 
     function millisecToWpm () {
@@ -84,7 +86,7 @@
             percentageAccuracy = (100 - errorCount / quote.length * 100).toFixed(1);
             showPopup = true;
         }
-        
+
         validText = "";
         invalidText = "";
         untypedText = quote;
@@ -124,7 +126,7 @@
             <p><span class="valid">{validText}</span><span class="invalid">{invalidText}</span>{untypedText}</p>
         </div>
 		<div class="row">
-            <input class={inputClass} id="typingInput" bind:value={currentText} on:paste={(e) => e.preventDefault()} on:keydown={(e) => checkForTab(e)} on:input={() => checkValid()}/>
+            <input autofocus bind:this={inputElement} class={inputClass} id="typingInput" bind:value={currentText} on:paste={(e) => e.preventDefault()} on:keydown={(e) => checkForTab(e)} on:input={() => checkValid()}/>
         </div>
         <div class="row buttonRow">
             <button class="btn btn-primary btn-lg nextButton" on:click={() => {reset(); randomQuote();}}>Next Quote</button>

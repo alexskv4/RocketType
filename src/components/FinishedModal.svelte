@@ -42,7 +42,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal" on:click={() => modalClose(true)}>Try again</button>
-          <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal" on:click={() => modalClose(false)}>Next Race</button>
+          <button autofocus type="button" class="btn btn-primary btn-lg" data-dismiss="modal" on:click={() => modalClose(false)}>Next Race</button>
         </div>
       </div>
     </div>
