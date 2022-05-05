@@ -1,6 +1,7 @@
 /node_modules/
 /public/build/
 /public/vendor/
+/public/.env
 /scripts/
 ReadME.md
 
