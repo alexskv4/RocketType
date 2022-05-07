@@ -4,5 +4,5 @@
 /public/.env
 /scripts/
 ReadME.md
-
+.env
 .DS_Store
