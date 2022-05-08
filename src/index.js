@@ -14,6 +14,7 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded())
 
 app.use("/quotes", routes.quotes)
+app.use("/users", routes.users)
 //Incorporating Route
 
 mongoose.connect(process.env.DATABASE_URL, {dbName: "RocketTypeDB"});

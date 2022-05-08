@@ -5,18 +5,42 @@
     export let showBackdrop = true;
     export let handleModalClose;
     export let setLoggedIn;
+    let loggedIn = false;
+
+    export let username;
+    let password;
 
     const login = () => {
-      setLoggedIn();  
+
+    //  console.log(username)
+    //  console.log(password)
+
+      fetch("/users", {method: "GET", headers: {"username": username, "password":password}})
+      .then((res) => res.json())
+      .then((json) => {
+        //console.log(json)
+        if (json[0]) {
+          loggedIn = true;
+          setLoggedIn(username);
+        }
+        else {
+          return
+        }
+      });
     };
 
 
     const modalClose = () => {
         login();
-        console.log("closing modal")
-        open = false;
-        if (handleModalClose) {
-          handleModalClose();
+        //console.log("closing modal")
+        if (loggedIn) {
+          open = false;
+          if (handleModalClose) {
+            handleModalClose();
+        }
+        else {
+          console.log("Failed Login");
+        }
         }
     };
 
@@ -36,10 +60,10 @@
 
           <form>
             <div class="form-group">
-              <input type="email" class="form-control" id="usernameInput" aria-describedby="emailHelp" placeholder="Enter username">
+              <input bind:value={username} type="text" class="form-control" id="usernameInput" aria-describedby="emailHelp" placeholder="Enter username">
             </div>
             <div class="form-group">
-              <input type="password" class="form-control" id="passwordInput" placeholder="Password">
+              <input bind:value={password} type="password" class="form-control" id="passwordInput" placeholder="Password">
             </div>
           </form>
 
