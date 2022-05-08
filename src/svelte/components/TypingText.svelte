@@ -37,17 +37,12 @@
     }
 
     function randomQuote () {
-        fetch("/quotes.json")
-        .then(response => response.json())
-        .then(json => {
-            var numQuotes = json.length
-            console.log(numQuotes)
-            var randomIndex = parseInt((Math.random() * (numQuotes - 1)));
-            console.log(randomIndex)
-            
-            quote = json[randomIndex].quoteText;
+        fetch("quotes/random")
+        .then(res => res.json())
+        .then((json) => {
+            quote = json[0].quoteText;
             untypedText = quote;
-        });
+        })
     }
 
     function onPopupClose (retry) {

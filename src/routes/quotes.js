@@ -16,19 +16,33 @@ router.get("/", async (req, res) => {
 
 });
 
-router.post("/", async (req, res) => {
+router.get("/random", async (req, res) => {
 
-    const quote = new QuoteModel({
-        quoteText: req.body.quoteText,
-        quoteAuthor: req.body.quoteAuthor
-    })
     try {
-        const newQuote = await quote.save();
-        res.status(201).json(newQuote)
+        
+        const quote = await QuoteModel.aggregate([{$sample: {size: 1}}]);
+        return res.send(quote);
+
     } catch (error) {
-        res.status(400).json({message: error.message})
+        res.status(500);
+        console.error(error);
     }
 
-})
+});
+
+// router.post("/", async (req, res) => {
+
+//     const quote = new QuoteModel({
+//         quoteText: req.body.quoteText,
+//         quoteAuthor: req.body.quoteAuthor
+//     })
+//     try {
+//         const newQuote = await quote.save();
+//         res.status(201).json(newQuote)
+//     } catch (error) {
+//         res.status(400).json({message: error.message})
+//     }
+
+// });
 
 export default router;
