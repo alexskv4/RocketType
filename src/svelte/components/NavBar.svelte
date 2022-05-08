@@ -1,3 +1,7 @@
+<script>
+	import Login from "./Login.svelte"
+</script>
+
 <nav class="navbar navbar-dark bg-dark">
 	<div class="container-fluid">
 		<div class="row leftNav">
@@ -7,7 +11,9 @@
 				<div class="col">
 					<h1 class="headerText">RocketType</h1>
 				</div>
-				
+		</div>
+		<div class="row">
+			<Login/>
 		</div>
 	</div>
 </nav>
