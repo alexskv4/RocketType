@@ -1,5 +1,6 @@
 import {Router} from 'express';
 import {UserModel} from "../models/users.js";
+import bcrypt from "bcrypt";
 
 const router = Router();
 
@@ -13,7 +14,7 @@ router.post("/login", async (req, res) => {
         // console.log(req.get("password"))
         // console.log(user[0].password)
 
-        if (user[0] && user[0].password == req.body.password) {
+        if (user[0] && await bcrypt.compare(req.body.password, user[0].password)) {
             return res.status(200).send(user);
         }
         else {
@@ -31,11 +32,16 @@ router.post("/login", async (req, res) => {
 
 router.post("/register", async (req, res) => {
     
+    
+    let salt = await bcrypt.genSalt();
+    let hashedPassword = await bcrypt.hash(req.body.password, salt);
+    
+
     console.log(req.body)
 
     const user = new UserModel({
         username: req.body.username,
-        password: req.body.password
+        password: hashedPassword
     });
     try {
         await user.save();
