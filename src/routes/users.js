@@ -40,6 +40,7 @@ router.post("/register", async (req, res) => {
 
     if (userCheck[0]) {
         res.status(409).send();
+        return
     }
 
     let salt = await bcrypt.genSalt();
