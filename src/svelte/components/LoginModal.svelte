@@ -1,48 +1,40 @@
-
 <script>
 
-    export let open = false;
-    export let showBackdrop = true;
-    export let handleModalClose;
-    export let setLoggedIn;
-    let loggedIn = false;
+  export let open = false;
+  export let showBackdrop = true;
+  export let handleModalClose;
+  export let setLoggedIn;
+  let loggedIn = false;
 
-    export let username;
-    let password;
+  export let username;
+  let password;
 
-    const login = () => {
+  const login = () => {
 
-    //  console.log(username)
-    //  console.log(password)
+  //  console.log(username)
+  //  console.log(password)
 
-      fetch("/users", {method: "GET", headers: {"username": username, "password":password}})
-      .then((res) => res.json())
-      .then((json) => {
-        //console.log(json)
-        if (json[0]) {
-          loggedIn = true;
-          setLoggedIn(username);
-        }
-        else {
-          return
-        }
-      });
-    };
+    fetch("/users", {method: "GET", headers: {"username": username, "password":password}})
+    .then((res) => res.json())
+    .then((json) => {
+      //console.log(json)
+      if (json[0]) {
+        loggedIn = true;
+        setLoggedIn(username);
+        modalClose();
+      }
+      else {
+        console.log("Failed login");
+      }
+    });
+  };
 
-
-    const modalClose = () => {
-        login();
-        //console.log("closing modal")
-        if (loggedIn) {
-          open = false;
-          if (handleModalClose) {
-            handleModalClose();
-        }
-        else {
-          console.log("Failed Login");
-        }
-        }
-    };
+  const modalClose = () => {
+      open = false;
+      if (handleModalClose) {
+          handleModalClose();
+      }
+  };
 
 
 </script>
@@ -50,64 +42,65 @@
 
 
 {#if open}
-  <div class="modal" tabindex="-1" role="dialog" aria-hidden={false}>
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title">Login</h1>
-        </div>
-        <div class="modal-body">
+<div class="modal" tabindex="-1" role="dialog" aria-hidden={false}>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title">Login</h1>
+      </div>
+      <div class="modal-body">
 
-          <form>
-            <div class="form-group">
-              <input bind:value={username} type="text" class="form-control" id="usernameInput" aria-describedby="emailHelp" placeholder="Enter username">
-            </div>
-            <div class="form-group">
-              <input bind:value={password} type="password" class="form-control" id="passwordInput" placeholder="Password">
-            </div>
-          </form>
+        <form>
+          <div class="form-group">
+            <input bind:value={username} type="text" class="form-control" id="usernameInput" aria-describedby="emailHelp" placeholder="Enter username">
+          </div>
+          <div class="form-group">
+            <input bind:value={password} type="password" class="form-control" id="passwordInput" placeholder="Password">
+          </div>
+        </form>
 
 
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal" on:click={() => modalClose()}>Login</button>
-        </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-lg" on:click={() => modalClose()}>Cancel</button>
+          <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal" on:click={() => login()}>Login</button>
       </div>
     </div>
   </div>
-  {#if showBackdrop}
-    <div class="modal-backdrop show" />
-  {/if}
+</div>
+{#if showBackdrop}
+  <div class="modal-backdrop show" />
+{/if}
 {/if}
 
 <style>
-  .form-group {
-    margin: 10px;
-  }
-  .modal {
-    display: block;
-    justify-content: center;
-  }
-  .modal-content {
-    height: 50%;
-    width: 70%;
-  }
-  .modal-dialog {
-    height: 50%;
-    width: 70%;
-    max-width: 70%;
-    align-content: center;
-    justify-content: center;
-  }
-  .modal-footer {
-    justify-content: right;
-  }
-  .modal-body {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    font-size: xx-large;
-  }
+.form-group {
+  margin: 10px;
+}
+.modal {
+  display: block;
+  justify-content: center;
+}
+.modal-content {
+  height: 50%;
+  width: 70%;
+}
+.modal-dialog {
+  height: 50%;
+  width: 70%;
+  max-width: 70%;
+  align-content: center;
+  justify-content: center;
+}
+.modal-footer {
+  justify-content: right;
+}
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  font-size: xx-large;
+}
 
 </style>

@@ -11,7 +11,7 @@ const app = express();
 app.use(cors());
 app.use(express.static('public'));
 app.use(bodyparser.json());
-app.use(bodyparser.urlencoded())
+app.use(bodyparser.urlencoded({extended: true}));
 
 app.use("/quotes", routes.quotes)
 app.use("/users", routes.users)

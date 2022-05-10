@@ -2,12 +2,6 @@ import mongoose from "mongoose";
 
 let userSchema = new mongoose.Schema({
 
-
-    _id: {
-        oid: {
-            type: String
-        }
-    },
     username: {
         type: String
     },

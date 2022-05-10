@@ -29,4 +29,22 @@ router.get("/", async (req, res) => {
 
 });
 
+router.post("/register", async (req, res) => {
+    
+    console.log(req.body)
+
+    const user = new UserModel({
+        username: req.body.username,
+        password: req.body.password
+    });
+    try {
+        await user.save();
+        res.status(201).json({message: "Success"});
+    } catch (error) {
+        res.status(400).json({message: error.message})
+    }
+
+
+});
+
 export default router;
