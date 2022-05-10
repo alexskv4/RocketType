@@ -14,18 +14,30 @@
   //  console.log(username)
   //  console.log(password)
 
-    fetch("/users", {method: "GET", headers: {"username": username, "password":password}})
-    .then((res) => res.json())
-    .then((json) => {
-      //console.log(json)
-      if (json[0]) {
-        loggedIn = true;
-        setLoggedIn(username);
-        modalClose();
+    let data = {username: username, password: password}
+    let strData = JSON.stringify(data);
+
+    fetch("/users/login", {method: "POST", headers: {"Content-Type": "application/json"}, body: strData})
+    .then((res) => {
+    
+      if(res.status == "200"){
+        res.json();
       }
       else {
-        console.log("Failed login");
+        throw new Error("Login Failed.")
       }
+    
+    })
+    .then((json) => {
+      //console.log(json)
+      
+      loggedIn = true;
+      setLoggedIn(username);
+      modalClose();
+    
+    })
+    .catch((error) => {
+      console.error(error);
     });
   };
 

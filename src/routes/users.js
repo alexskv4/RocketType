@@ -3,17 +3,17 @@ import {UserModel} from "../models/users.js";
 
 const router = Router();
 
-router.get("/", async (req, res) => {
+router.post("/login", async (req, res) => {
 
     try {
         
-        const user = await UserModel.find({"username":req.header("username")});
+        const user = await UserModel.find({"username":req.body.username});
 
         // console.log(req.get("username"))
         // console.log(req.get("password"))
         // console.log(user[0].password)
 
-        if (user[0] && user[0].password == req.header("password")) {
+        if (user[0] && user[0].password == req.body.password) {
             return res.status(200).send(user);
         }
         else {
@@ -39,9 +39,9 @@ router.post("/register", async (req, res) => {
     });
     try {
         await user.save();
-        res.status(201).json({message: "Success"});
+        res.status(201).json(user);
     } catch (error) {
-        res.status(400).json({message: error.message})
+        res.status(400).send();
     }
 
 
