@@ -19,7 +19,6 @@
 
     fetch("/users/login", {method: "POST", headers: {"Content-Type": "application/json"}, body: strData})
     .then((res) => {
-    
       if(res.status == "200"){
         res.json();
       }

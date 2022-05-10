@@ -26,7 +26,7 @@
         fetch("/users/register", {method: "POST", headers: {"Content-Type" : "application/json"}, body: strData})
         .then((res) => {
            
-           if(res.status == "201") { //Make throw error and then catch if not 200.
+           if(res.status == "201") { 
                 res.json();
            }
            else {

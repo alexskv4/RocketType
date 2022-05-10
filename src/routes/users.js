@@ -10,16 +10,20 @@ router.post("/login", async (req, res) => {
         
         const user = await UserModel.find({"username":req.body.username});
 
+        console.log(user);
         // console.log(req.get("username"))
         // console.log(req.get("password"))
         // console.log(user[0].password)
+        if (user[0] == null) {
+            return res.status(404).send();
+        }
 
-        if (user[0] && await bcrypt.compare(req.body.password, user[0].password)) {
+        if (await bcrypt.compare(req.body.password, user[0].password)) {
             return res.status(200).send(user);
         }
         else {
             console.log("failed")
-            return res.status(400);
+            return res.status(400).send();
             
         }
 
@@ -32,7 +36,12 @@ router.post("/login", async (req, res) => {
 
 router.post("/register", async (req, res) => {
     
-    
+    let userCheck = await await UserModel.find({"username":req.body.username});
+
+    if (userCheck[0]) {
+        res.status(409).send();
+    }
+
     let salt = await bcrypt.genSalt();
     let hashedPassword = await bcrypt.hash(req.body.password, salt);
     
