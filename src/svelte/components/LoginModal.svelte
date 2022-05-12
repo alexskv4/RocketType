@@ -8,6 +8,7 @@
 
   export let username;
   let password;
+  let incorrectLogin = false;
 
   const login = () => {
 
@@ -23,6 +24,7 @@
         res.json();
       }
       else {
+        incorrectLogin = true;
         throw new Error("Login Failed.")
       }
     
@@ -68,6 +70,11 @@
           <div class="form-group">
             <input bind:value={password} type="password" class="form-control" id="passwordInput" placeholder="Password">
           </div>
+          {#if incorrectLogin}
+            <div class="alert alert-danger form-group" role="alert">
+              <p class="alertText">Incorrect Username or password.</p>
+            </div>
+          {/if}
         </form>
 
 
@@ -85,6 +92,10 @@
 {/if}
 
 <style>
+.alertText {
+  font-size: medium;
+  margin: 0%;
+}
 .form-group {
   margin: 10px;
 }
@@ -93,7 +104,6 @@
   justify-content: center;
 }
 .modal-content {
-  height: 50%;
   width: 70%;
 }
 .modal-dialog {
