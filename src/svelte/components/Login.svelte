@@ -25,6 +25,11 @@
         loggedIn = true;
     }
 
+    function logOut() {
+        username=null;
+        loggedIn = false;
+    }
+
 </script>
 
 {#if (!loggedIn)}
@@ -35,8 +40,8 @@
 {/if}
 
 {#if (loggedIn)}
-
-    <p class="accName">Logged in as: {username}</p>
+    <button on:click={() => logOut()} class="btn btn-primary col logoutButton">Logout</button>
+    <p class="accName col">Logged in as: {username}</p>
 
 {/if}
 
@@ -49,5 +54,8 @@
     }
     .registerButton {
         margin:10px;
+    }
+    .logoutButton {
+        margin:10px
     }
 </style>

@@ -58,8 +58,6 @@
 
 </script>
 
-
-
 {#if open}
   <div class="modal" tabindex="-1" role="dialog" aria-hidden={false}>
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -77,7 +75,7 @@
               <input bind:value={password} type="password" class="form-control" id="passwordInput" placeholder="Enter Password">
             </div>
             <div class="form-group">
-                <input bind:value={password2} type="password" class="form-control" id="passwordInput" placeholder="Confirm Password">
+                <input bind:value={password2} type="password" class="form-control" id="ConfirmPasswordInput" placeholder="Confirm Password">
               </div>
           </form>
 
