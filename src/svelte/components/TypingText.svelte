@@ -7,22 +7,26 @@
     //let quote = "abc";
 
     let showPopup = false;
+   
     let startTime;
     let endTime;
     let totalTime;
-    let currentText;
+    let wpm;
+    let errorCount = 0;
+    let percentageAccuracy;
+
+
     let inputClass= "valid";
     let validText="";
     let invalidText="";
     let untypedText="";
     let quote = "";
+    let currentText;
     let percentageTyped = 0;
     let hasError = false;
     let inputElement;
 
-    let wpm;
-    let errorCount = 0;
-    let percentageAccuracy;
+
 
     function focusEl (element) {
         element.focus();
