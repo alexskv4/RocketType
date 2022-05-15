@@ -4,6 +4,33 @@ import bcrypt from "bcrypt";
 
 const router = Router();
 
+router.post("/postRace", async (req, res) => {
+
+    try {
+        const user = await UserModel.findOne({"username": req.body.username});
+        console.log(user);
+        console.log(req.body)
+        console.log(req.body.quoteId)
+        let race = {
+            wpm: req.body.wpm,
+            percentageAccuracy: req.body.percentageAccuracy,
+            startTime: req.body.startTime,
+            endTime: req.body.endTime,
+            errorCount: req.body.errorCount,
+            quoteId: req.body.quoteId
+        };
+
+        user.races.push(race);
+        user.save();
+        res.status(200).send();
+
+    } catch (error) {
+       console.error(error); 
+       res.status(500).send();
+    } 
+
+});
+
 router.post("/login", async (req, res) => {
 
     try {

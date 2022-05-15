@@ -1,5 +1,8 @@
 <script>
 	import Login from "./Login.svelte"
+
+	export let loggedIn;
+	export let username;
 </script>
 
 <nav class="navbar navbar-dark bg-dark">
@@ -13,7 +16,7 @@
 				</div>
 		</div>
 		<div class="row">
-			<Login/>
+			<Login bind:username={username} bind:loggedIn={loggedIn}/>
 		</div>
 	</div>
 </nav>

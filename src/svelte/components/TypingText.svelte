@@ -14,6 +14,7 @@
     let wpm;
     let errorCount = 0;
     let percentageAccuracy;
+    let quoteId;
 
 
     let inputClass= "valid";
@@ -25,8 +26,34 @@
     let percentageTyped = 0;
     let hasError = false;
     let inputElement;
+    
+    export let username;
+    export let loggedIn;
 
+    function postRaceResult () {
 
+        let data = {
+            username: username, 
+            wpm: wpm, 
+            percentageAccuracy: percentageAccuracy, 
+            startTime: startTime, 
+            endTime: endTime,
+            errorCount: errorCount,
+            quoteId: quoteId,
+
+        }
+        let strData = JSON.stringify(data);
+
+        fetch("/users/postRace", {method: "POST", headers:{"Content-Type": "application/json"}, body: strData})
+        .then((res) => {
+            if (res.status == "200") {
+                console.log("Race post OK")
+            }
+            else {
+                console.error("something went wrong posting race" + res.status)
+            }
+        })
+    }
 
     function focusEl (element) {
         element.focus();
@@ -46,6 +73,7 @@
         .then((json) => {
             quote = json[0].quoteText;
             untypedText = quote;
+            quoteId = json[0]._id;
         })
     }
 
@@ -88,6 +116,9 @@
             millisecToWpm();
             percentageAccuracy = (100 - errorCount / quote.length * 100).toFixed(1);
             showPopup = true;
+            if(loggedIn) {
+                postRaceResult();
+            }
         }
 
         validText = "";

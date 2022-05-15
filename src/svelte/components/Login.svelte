@@ -5,8 +5,8 @@
 
     let showRegisterModal = false;
     let showLoginModal = false;
-    let loggedIn = false;
-    let username;
+    export let loggedIn = false;
+    export let username;
 
     
     // Make it so if you are logged in, it shows your account name and stuff, and doesnt show login button.
