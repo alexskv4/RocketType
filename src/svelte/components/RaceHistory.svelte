@@ -2,7 +2,7 @@
 
     export let loggedIn;
     export let races; //use to store array of race objects.
-    
+
     function formatDateTime (dateTimeString) {
 
         let date = new Date(dateTimeString);
@@ -11,9 +11,18 @@
         let hours;
         let amPm;
         let minutes;
+        
         if (date.getHours() > 12) {
             hours = date.getHours() - 12;
             amPm = "PM";
+        }
+        else if(date.getHours() == 0) {
+            hours = 12;
+            amPm = "AM";
+        }
+        else if(date.getHours() == 12) {
+            hours = 12;
+            amPm = "PM"
         }
         else {
             hours = date.getHours();
