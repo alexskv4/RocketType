@@ -4,13 +4,45 @@ import bcrypt from "bcrypt";
 
 const router = Router();
 
+router.post("/recentRaces", async (req, res) => {
+
+    try {
+        const user = await UserModel.findOne({"username": req.body.username});
+        let racesToSend = [];
+        //console.log(user.races)
+        console.log(user.races.length)
+
+        let endIndex;
+
+        if(user.races.length > 10) {
+            endIndex = user.races.length - 10
+        }
+        else {
+            endIndex = 0
+        }
+
+        for(let i = user.races.length - 1; i >= endIndex; i--) {
+            if (user.races[i] != null) {
+                racesToSend.push(user.races[i]);
+            }
+        }
+
+        res.status(200).send(racesToSend);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send();
+    }
+
+});
+
 router.post("/postRace", async (req, res) => {
 
     try {
         const user = await UserModel.findOne({"username": req.body.username});
-        console.log(user);
-        console.log(req.body)
-        console.log(req.body.quoteId)
+        // console.log(user);
+        // console.log(req.body)
+        // console.log(req.body.quoteId)
         let race = {
             wpm: req.body.wpm,
             percentageAccuracy: req.body.percentageAccuracy,
@@ -37,7 +69,7 @@ router.post("/login", async (req, res) => {
         
         const user = await UserModel.find({"username":req.body.username});
 
-        console.log(user);
+        //console.log(user);
         // console.log(req.get("username"))
         // console.log(req.get("password"))
         // console.log(user[0].password)
@@ -74,7 +106,7 @@ router.post("/register", async (req, res) => {
     let hashedPassword = await bcrypt.hash(req.body.password, salt);
     
 
-    console.log(req.body)
+    //console.log(req.body)
 
     const user = new UserModel({
         username: req.body.username,

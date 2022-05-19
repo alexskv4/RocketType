@@ -1,5 +1,6 @@
 <script>
     import FinishedModal from "./FinishedModal.svelte";
+    import RaceHistory from "./RaceHistory.svelte";
 
     //let quote = "We all get lost once in a while, sometimes by choice, sometimes due to forces beyond our control. When we learn what it is our soul needs to learn, the path presents itself. Sometimes we see the way out but wander further and deeper despite ourselves; the fear, the anger or the sadness preventing us returning. Sometimes we prefer to be lost and wandering, sometimes it's easier. Sometimes we find our own way out. But regardless, always, we are found."
     //let quote = "The quick brown fox jumped over the lazy dog."
@@ -16,6 +17,7 @@
     let percentageAccuracy;
     let quoteId;
 
+    let recentRaces=[];
 
     let inputClass= "valid";
     let validText="";
@@ -29,6 +31,30 @@
     
     export let username;
     export let loggedIn;
+
+    $: if (loggedIn) {
+        updateRecentRaces();
+    }
+    else {
+        //username = "";
+        recentRaces=[];
+    }
+
+    function updateRecentRaces () {
+        let data = {
+            username: username
+        }
+        let strData = JSON.stringify(data);
+
+        fetch("users/recentRaces", {method: "POST", headers:{"Content-Type": "application/json"}, body:strData})
+        .then(res => res.json())
+        .then((data) => {
+            //console.log(data);
+            recentRaces = data;
+            
+            console.log(recentRaces);
+        })
+    }
 
     function postRaceResult () {
 
@@ -118,6 +144,7 @@
             showPopup = true;
             if(loggedIn) {
                 postRaceResult();
+                updateRecentRaces();
             }
         }
 
@@ -165,11 +192,18 @@
         <div class="row buttonRow">
             <button class="btn btn-primary btn-lg nextButton" on:click={() => {reset(); randomQuote();}}>Next Quote</button>
         </div>
+        <div class="row raceHistoryRow">
+            <RaceHistory bind:races={recentRaces} bind:loggedIn={loggedIn}/>
+        </div>
 	</div>
 </main>
 <FinishedModal percentageAccuracy={percentageAccuracy} errorCount={errorCount} wpm={wpm} open={showPopup} onClosed={(retry) => onPopupClose(retry)}/>
 
 <style>
+    .raceHistoryRow {
+        align-content: center;
+        justify-content: center;
+    }
     .quote {
         margin-top: 10px;
     }
