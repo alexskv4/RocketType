@@ -2,6 +2,35 @@
 
     export let loggedIn;
     export let races; //use to store array of race objects.
+    
+    function formatDateTime (dateTimeString) {
+
+        let date = new Date(dateTimeString);
+
+        let month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][date.getMonth()];
+        let hours;
+        let amPm;
+        let minutes;
+        if (date.getHours() > 12) {
+            hours = date.getHours() - 12;
+            amPm = "PM";
+        }
+        else {
+            hours = date.getHours();
+            amPm = "AM";
+        }
+
+        if (date.getMinutes() < 10) {
+            minutes = "0" + date.getMinutes().toString();
+        }
+        else {
+            minutes = date.getMinutes();
+        }
+
+        let formattedDate = month + " " + date.getDate() + ", " + hours + ":" + minutes + " " + amPm;
+
+        return(formattedDate);
+    }
 
 </script>
 
@@ -9,7 +38,7 @@
 
     <div class="raceHistoryBox col">
 
-        Login to see previous races
+        Login to see your race history
 
     </div>
 
@@ -22,6 +51,7 @@
                 <div class="col">{race.wpm} WPM</div>
                 <div class="col">{race.percentageAccuracy} % Accuracy</div>
                 <div class="col">{race.errorCount} mistakes</div>
+                <div class="col">{formatDateTime(race.endTime)}</div>
             </div>     
         {/each}
     </div>
