@@ -229,7 +229,7 @@
         background-color: white;
     }
     .typingBox {
-		padding-top: 10%;
+		padding-top: 5%;
 	}
     #typingInput {
         font-size: larger;       
