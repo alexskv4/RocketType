@@ -132,7 +132,7 @@
         console.log(wpm);
     }
 
-    function checkValid() {
+    async function checkValid() {
         if (currentText.length == 1) {
             startTime = new Date().getTime();
         }
@@ -143,7 +143,7 @@
             percentageAccuracy = (100 - errorCount / quote.length * 100).toFixed(1);
             showPopup = true;
             if(loggedIn) {
-                postRaceResult();
+                await (postRaceResult());
                 updateRecentRaces();
             }
         }
