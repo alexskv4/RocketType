@@ -133,6 +133,9 @@
     }
 
     async function checkValid() {
+        if (currentText.length == 0) {
+            reset();
+        }
         if (currentText.length == 1) {
             startTime = new Date().getTime();
         }
