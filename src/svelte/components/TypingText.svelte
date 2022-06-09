@@ -212,6 +212,7 @@
     }
     .buttonRow {
         justify-content: center;
+        margin-bottom: 5%;
     }
     .nextButton {
         margin-top: 10px;

@@ -3,6 +3,31 @@
     export let loggedIn;
     export let races; //use to store array of race objects.
 
+    let avgWPM = 0;
+    let avgAcc = 0;
+
+    function getAvgWPM () {
+        avgWPM = 0;
+
+        for (let i = 0; i < races.length; i++) {
+            avgWPM += races[i].wpm;
+        }
+
+        avgWPM = ((avgWPM + 0.5) / races.length).toFixed(2);
+        return (avgWPM)
+    }
+    
+    function getAvgAcc () {
+        avgAcc = 0;
+
+        for (let i = 0; i < races.length; i++) {
+            avgAcc += races[i].percentageAccuracy;
+        }
+
+        avgAcc = ((avgAcc + 0.5) / races.length).toFixed(2);
+        return (avgAcc)
+    }
+
     function formatDateTime (dateTimeString) {
 
         let date = new Date(dateTimeString);
@@ -45,7 +70,7 @@
 
 {#if !loggedIn}
 
-    <div class="raceHistoryBox col">
+    <div class="raceHistoryBox notLogged col">
 
         Login to see your race history
 
@@ -53,8 +78,18 @@
 
 {/if}
 {#if (loggedIn && races[0])}
-
+    <div class="row headerRow">
+        <div class="col">Past 10 Races</div>
+    </div>
     <div class="raceHistoryBox col">
+        <div class="row avgRow">
+            <div class="col">
+                Average WPM: {getAvgWPM()}
+            </div>
+            <div class="col">
+                Average Accuracy: {getAvgAcc()}%
+            </div>
+        </div>
         {#each races as race}
             <div class="row raceInfo">
                 <div class="col">{race.wpm} WPM</div>
@@ -81,9 +116,18 @@
         border: 2px solid black;
         border-radius: 5px;
         text-align: center;
-        margin-top: 5%;
-        padding: 5px;
         font-size: x-large;
+    }
+    .headerRow {
+        text-align: center;
+        font-size: xx-large;
+    }
+    .avgRow {
+        border-bottom: 2px solid black;
+        padding: 2px
+    }
+    .notLogged {
+        padding: 10px
     }
 
 </style>
