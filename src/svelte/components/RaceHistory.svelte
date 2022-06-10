@@ -3,30 +3,8 @@
     export let loggedIn;
     export let races; //use to store array of race objects.
 
-    let avgWPM = 0;
-    let avgAcc = 0;
-
-    function getAvgWPM () {
-        avgWPM = 0;
-
-        for (let i = 0; i < races.length; i++) {
-            avgWPM += races[i].wpm;
-        }
-
-        avgWPM = ((avgWPM + 0.5) / races.length).toFixed(2);
-        return (avgWPM)
-    }
-    
-    function getAvgAcc () {
-        avgAcc = 0;
-
-        for (let i = 0; i < races.length; i++) {
-            avgAcc += races[i].percentageAccuracy;
-        }
-
-        avgAcc = ((avgAcc + 0.5) / races.length).toFixed(2);
-        return (avgAcc)
-    }
+    export let avgWPM;
+    export let avgAcc;
 
     function formatDateTime (dateTimeString) {
 
@@ -84,10 +62,10 @@
     <div class="raceHistoryBox col">
         <div class="row avgRow">
             <div class="col">
-                Average WPM: {getAvgWPM()}
+                Average WPM: {avgWPM}
             </div>
             <div class="col">
-                Average Accuracy: {getAvgAcc()}%
+                Average Accuracy: {avgAcc}%
             </div>
         </div>
         {#each races as race}

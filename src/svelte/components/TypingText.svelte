@@ -19,6 +19,9 @@
 
     let recentRaces=[];
 
+    let avgWPM;
+    let avgAcc;
+
     let inputClass= "valid";
     let validText="";
     let invalidText="";
@@ -27,6 +30,7 @@
     let currentText;
     let percentageTyped = 0;
     let hasError = false;
+    
     let inputElement;
     
     export let username;
@@ -40,6 +44,17 @@
         recentRaces=[];
     }
 
+    function getAverages () {
+        avgAcc = 0;
+        avgWPM = 0;
+        for (let i = 0; i < recentRaces.length; i++) {
+            avgAcc += parseInt(recentRaces[i].percentageAccuracy);
+            avgWPM += parseInt(recentRaces[i].wpm);
+        }
+        avgWPM = ((avgWPM + 0.5) / recentRaces.length).toFixed(2);
+        avgAcc = ((avgAcc + 0.5) / recentRaces.length).toFixed(2);
+    }
+
     function updateRecentRaces () {
         let data = {
             username: username
@@ -49,11 +64,9 @@
         fetch("users/recentRaces", {method: "POST", headers:{"Content-Type": "application/json"}, body:strData})
         .then(res => res.json())
         .then((data) => {
-            //console.log(data);
             recentRaces = data;
-            
-            console.log(recentRaces);
         })
+        .then(() => getAverages());
     }
 
     function postRaceResult () {
@@ -196,7 +209,7 @@
             <button class="btn btn-primary btn-lg nextButton" on:click={() => {reset(); randomQuote();}}>Next Quote</button>
         </div>
         <div class="row raceHistoryRow">
-            <RaceHistory bind:races={recentRaces} bind:loggedIn={loggedIn}/>
+            <RaceHistory avgAcc={avgAcc} avgWPM={avgWPM} bind:races={recentRaces} bind:loggedIn={loggedIn}/>
         </div>
 	</div>
 </main>
