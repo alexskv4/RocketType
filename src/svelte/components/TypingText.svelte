@@ -110,7 +110,7 @@
         fetch("quotes/random")
         .then(res => res.json())
         .then((json) => {
-            quote = json[0].quoteText;
+            quote = json[0].text;
             untypedText = quote;
             quoteId = json[0]._id;
         })

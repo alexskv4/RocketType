@@ -6,14 +6,22 @@ let quoteSchema = new mongoose.Schema({
             type: String
         }
     }, 
-    quoteText: {
+    text: {
         type: String,
         required: true
     }, 
-    quoteAuthor: {
+    source: {
         type: String,
         required: true
     },
+    length: {
+        type: Number,
+        required: true
+    },
+    id: {
+        type: Number,
+        required: true
+    }
 });
 
 let QuoteModel = mongoose.model("Quote", quoteSchema);
