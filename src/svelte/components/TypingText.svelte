@@ -36,7 +36,7 @@
     export let username;
     export let loggedIn;
 
-    $: if (loggedIn) {
+    $: if (showPopup || loggedIn) { // updates the recent races when the end of race popup disappears or when you log in.
         updateRecentRaces();
     }
     else {
@@ -159,8 +159,7 @@
             percentageAccuracy = (100 - errorCount / quote.length * 100).toFixed(1);
             showPopup = true;
             if(loggedIn) {
-                await (postRaceResult());
-                updateRecentRaces();
+                postRaceResult();
             }
         }
 
