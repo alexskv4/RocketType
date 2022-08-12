@@ -2,6 +2,8 @@
     import FinishedModal from "./FinishedModal.svelte";
     import RaceHistory from "./RaceHistory.svelte";
 
+    import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "sveltestrap";
+
     //let quote = "We all get lost once in a while, sometimes by choice, sometimes due to forces beyond our control. When we learn what it is our soul needs to learn, the path presents itself. Sometimes we see the way out but wander further and deeper despite ourselves; the fear, the anger or the sadness preventing us returning. Sometimes we prefer to be lost and wandering, sometimes it's easier. Sometimes we find our own way out. But regardless, always, we are found."
     //let quote = "The quick brown fox jumped over the lazy dog."
     //let quote = "They don't know that we know they know we know.";
@@ -32,6 +34,8 @@
     let hasError = false;
     
     let inputElement;
+
+    let quoteLength = "Random";
     
     export let username;
     export let loggedIn;
@@ -206,6 +210,17 @@
         </div>
         <div class="row buttonRow">
             <button class="btn btn-primary btn-lg nextButton" on:click={() => {reset(); randomQuote();}}>Next Quote</button>
+            <div class="lengthDropdown">
+                <Dropdown size="lg">
+                    <DropdownToggle caret>Quote Length: {quoteLength}</DropdownToggle>
+                    <DropdownMenu>
+                        <DropdownItem on:click={() => {quoteLength="Random"}}>Random</DropdownItem>
+                        <DropdownItem on:click={() => {quoteLength="Short"}}>Short</DropdownItem>
+                        <DropdownItem on:click={() => {quoteLength="Medium"}}>Medium</DropdownItem>
+                        <DropdownItem on:click={() => {quoteLength="Long"}}>Long</DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+            </div>
         </div>
         <div class="row raceHistoryRow">
             <RaceHistory avgAcc={avgAcc} avgWPM={avgWPM} bind:races={recentRaces} bind:loggedIn={loggedIn}/>
@@ -224,11 +239,18 @@
     }
     .buttonRow {
         justify-content: center;
+        align-items: center;
         margin-bottom: 5%;
+        margin-top: 10px;
+        display: flex;
+        flex-direction: row;
     }
     .nextButton {
-        margin-top: 10px;
+        /* margin-top: 10px; */
         max-width: 20%;
+    }
+    .lengthDropdown {
+        max-width: fit-content;
     }
     span.invalid {
         color: red;
