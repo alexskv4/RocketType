@@ -111,7 +111,7 @@
     }
 
     function randomQuote () {
-        fetch("quotes/random")
+        fetch("quotes/" + quoteLength)
         .then(res => res.json())
         .then((json) => {
             quote = json[0].text;
