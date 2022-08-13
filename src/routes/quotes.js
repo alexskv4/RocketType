@@ -33,7 +33,7 @@ router.get("/random", async (req, res) => {
 router.get("/short", async (req, res) => {
     try {
         
-        const quote = await QuoteModel.aggregate([{$match: {length:{$gt: 0, $lt: 100}}}, {$sample: {size: 1}}]);
+        const quote = await QuoteModel.aggregate([{$match: {length:{$gt: 0, $lt: 150}}}, {$sample: {size: 1}}]);
         return res.send(quote);
 
     } catch (error) {
@@ -57,7 +57,7 @@ router.get("/long", async (req, res) => {
 router.get("/medium", async (req, res) => {
     try {
         
-        const quote = await QuoteModel.aggregate([{$match: {length:{$gt: 100, $lt: 800}}}, {$sample: {size: 1}}]);
+        const quote = await QuoteModel.aggregate([{$match: {length:{$gt: 150, $lt: 800}}}, {$sample: {size: 1}}]);
         return res.send(quote);
 
     } catch (error) {

@@ -214,10 +214,10 @@
                 <Dropdown size="lg">
                     <DropdownToggle caret>Quote Length: {quoteLength}</DropdownToggle>
                     <DropdownMenu>
-                        <DropdownItem on:click={() => {quoteLength="Random"}}>Random</DropdownItem>
-                        <DropdownItem on:click={() => {quoteLength="Short"}}>Short</DropdownItem>
-                        <DropdownItem on:click={() => {quoteLength="Medium"}}>Medium</DropdownItem>
-                        <DropdownItem on:click={() => {quoteLength="Long"}}>Long</DropdownItem>
+                        <DropdownItem on:click={() => {quoteLength="Random"; reset(); randomQuote();}}>Random</DropdownItem>
+                        <DropdownItem on:click={() => {quoteLength="Short"; reset(); randomQuote();}}>Short</DropdownItem>
+                        <DropdownItem on:click={() => {quoteLength="Medium"; reset(); randomQuote();}}>Medium</DropdownItem>
+                        <DropdownItem on:click={() => {quoteLength="Long"; reset(); randomQuote();}}>Long</DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
             </div>
