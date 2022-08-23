@@ -6,3 +6,4 @@
 ReadME.md
 .env
 .DS_Store
+.vscode/launch.json
