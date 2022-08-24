@@ -1,87 +1,57 @@
 <script>
+  import { tick } from 'svelte';
+  import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'sveltestrap';
 
-    export let open = false;
-    export let showBackdrop = true;
-    export let onClosed;
-    export let wpm;
-    export let errorCount;
-    export let percentageAccuracy;
+  export let open = false;
+  // export let showBackdrop = true;
+  export let onClosed;
+  export let wpm;
+  export let errorCount;
+  export let percentageAccuracy;
 
-    const modalClose = (retry) => {
+  const modalClose = (retry) => {
 
-        open = false;
-        if (onClosed) {
-            onClosed(retry);
-        }
-    }
-    function focusEl (element) {
-      element.focus();
-    }
+      open = false;
+      if (onClosed) {
+          onClosed(retry);
+      }
+  }
+  async function focusEl (element) {
+    await tick();
+    element.focus();
+  }
 
 </script>
 
-
-{#if open}
-  <div class="modal" tabindex="-1" role="dialog" aria-labelledby="sampleModalLabel" aria-hidden={false}>
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title">Race Results</h1>
-        </div>
-        <div class="modal-body">
-
-        <div class="col textCol">
-          <div class="row">
-            Speed: {wpm} WPM
-          </div>
-          <div class="row">
-            Number of errors: {errorCount}
-          </div>
-          <div class="row">
-            Accuracy: {percentageAccuracy}%
-          </div>
-        </div>
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal" on:click={() => modalClose(true)}>Try again</button>
-          <button use:focusEl type="button" class="btn btn-primary btn-lg" data-dismiss="modal" on:click={() => modalClose(false)}>Next Race</button>
-        </div>
+<Modal size={'lg'} isOpen={open} {modalClose}>
+  <ModalHeader {modalClose}>
+    <div class="headerText">Race results</div>
+  </ModalHeader>
+  <ModalBody>
+    <div class="col textCol">
+      <div class="row">
+        Speed: {wpm} WPM
+      </div>
+      <div class="row">
+        Number of errors: {errorCount}
+      </div>
+      <div class="row">
+        Accuracy: {percentageAccuracy}%
       </div>
     </div>
-  </div>
-  {#if showBackdrop}
-    <div class="modal-backdrop show" />
-  {/if}
-{/if}
+  </ModalBody>
+  <ModalFooter>
+    <button type="button" class="btn btn-secondary btn-lg" on:click={() => modalClose(true)}>Try again</button>
+    <button use:focusEl type="button" class="btn btn-primary btn-lg" on:click={() => modalClose(false)}>Next Race</button>
+  </ModalFooter>
+</Modal>
 
 <style>
   .textCol {
     margin-left: 1em;
+    font-size: xx-large;
   }
-  .modal {
-    display: block;
-    justify-content: center;
-  }
-  .modal-content {
-    height: 50%;
-    width: 70%;
-  }
-  .modal-dialog {
-    height: 50%;
-    width: 70%;
-    max-width: 70%;
-    align-content: center;
-    justify-content: center;
-  }
-  .modal-footer {
-    justify-content: right;
-  }
-  .modal-body {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
+  .headerText {
     font-size: xx-large;
   }
 </style>

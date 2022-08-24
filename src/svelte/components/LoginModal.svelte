@@ -1,7 +1,8 @@
 <script>
 
+  import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'sveltestrap';
+
   export let open = false;
-  export let showBackdrop = true;
   export let handleModalClose;
   export let setLoggedIn;
   let loggedIn = false;
@@ -11,9 +12,6 @@
   let incorrectLogin = false;
 
   const login = () => {
-
-  //  console.log(username)
-  //  console.log(password)
 
     let data = {username: username, password: password}
     let strData = JSON.stringify(data);
@@ -27,10 +25,8 @@
         incorrectLogin = true;
         throw new Error("Login Failed.")
       }
-    
     })
     .then((json) => {
-      //console.log(json)
       
       loggedIn = true;
       setLoggedIn(username);
@@ -49,79 +45,39 @@
       }
   };
 
-
 </script>
 
-
-
-{#if open}
-<div class="modal" tabindex="-1" role="dialog" aria-hidden={false}>
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title">Login</h1>
+<Modal isOpen={open} {modalClose}>
+  <ModalHeader {modalClose}>Login</ModalHeader>
+  <ModalBody>
+    <form>
+      <div class="form-group">
+        <input bind:value={username} type="text" class="form-control" id="usernameInput" aria-describedby="emailHelp" placeholder="Enter username">
       </div>
-      <div class="modal-body">
-
-        <form>
-          <div class="form-group">
-            <input bind:value={username} type="text" class="form-control" id="usernameInput" aria-describedby="emailHelp" placeholder="Enter username">
-          </div>
-          <div class="form-group">
-            <input bind:value={password} type="password" class="form-control" id="passwordInput" placeholder="Password">
-          </div>
-          {#if incorrectLogin}
-            <div class="alert alert-danger form-group" role="alert">
-              <p class="alertText">Incorrect Username or password.</p>
-            </div>
-          {/if}
-        </form>
-
-
+      <div class="form-group">
+        <input bind:value={password} type="password" class="form-control" id="passwordInput" placeholder="Password">
       </div>
-      <div class="modal-footer">
-          <button type="button" class="btn btn-secondary btn-lg" on:click={() => modalClose()}>Cancel</button>
-          <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal" on:click={() => login()}>Login</button>
-      </div>
-    </div>
-  </div>
-</div>
-{#if showBackdrop}
-  <div class="modal-backdrop show" />
-{/if}
-{/if}
+      {#if incorrectLogin}
+        <div class="alert alert-danger form-group" role="alert">
+          <p class="alertText">Incorrect Username or password.</p>
+        </div>
+      {/if}
+    </form>
+  </ModalBody>
+  <ModalFooter>
+    <button type="button" class="btn btn-secondary btn-lg" on:click={() => modalClose()}>Cancel</button>
+    <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal" on:click={() => login()}>Login</button>
+  </ModalFooter>
+</Modal>
 
 <style>
+
 .alertText {
   font-size: medium;
   margin: 0%;
 }
 .form-group {
   margin: 10px;
-}
-.modal {
-  display: block;
-  justify-content: center;
-}
-.modal-content {
-  width: 70%;
-}
-.modal-dialog {
-  height: 50%;
-  width: 70%;
-  max-width: 70%;
-  align-content: center;
-  justify-content: center;
-}
-.modal-footer {
-  justify-content: right;
-}
-.modal-body {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  justify-content: center;
-  font-size: xx-large;
 }
 
 </style>
