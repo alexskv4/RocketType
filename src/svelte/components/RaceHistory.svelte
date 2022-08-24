@@ -1,5 +1,7 @@
 <script>
 
+    import { Table } from 'sveltestrap';
+
     export let loggedIn;
     export let races; //use to store array of race objects.
 
@@ -60,22 +62,34 @@
         <div class="col">Past 10 Races</div>
     </div>
     <div class="raceHistoryBox col">
-        <div class="row avgRow">
+        <!-- <div class="row avgRow">
             <div class="col">
                 Average WPM: {avgWPM}
             </div>
             <div class="col">
                 Average Accuracy: {avgAcc}%
             </div>
-        </div>
-        {#each races as race}
-            <div class="row raceInfo">
-                <div class="col">{race.wpm} WPM</div>
-                <div class="col">{race.percentageAccuracy} % Accuracy</div>
-                <div class="col">{race.errorCount} mistakes</div>
-                <div class="col">{formatDateTime(race.endTime)}</div>
-            </div>     
-        {/each}
+        </div> -->
+        <Table>
+            <thead>
+                <tr>
+                    <th>WPM</th>
+                    <th>% Accuracy</th>
+                    <th>Mistakes</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody class="tableBody">
+                {#each races as race}
+                    <tr>
+                        <td>{race.wpm} WPM</td>
+                        <td>{race.percentageAccuracy} % Accuracy</td>
+                        <td>{race.errorCount}</td>
+                        <td>{formatDateTime(race.endTime)}</td>
+                    </tr>     
+                {/each}
+            </tbody>
+        </Table>
     </div>
 
 {/if}
@@ -87,25 +101,27 @@
     </div>
 {/if}
 <style>
-    .raceInfo {
-        font-size:medium;
-    }
     .raceHistoryBox {
         border: 2px solid black;
         border-radius: 5px;
         text-align: center;
         font-size: x-large;
+        padding: 0px;
+        margin-bottom: 10%;
     }
     .headerRow {
         text-align: center;
         font-size: xx-large;
     }
-    .avgRow {
-        border-bottom: 2px solid black;
-        padding: 2px
-    }
     .notLogged {
         padding: 10px
+    }
+    .tableBody {
+        font-size: medium;
+    }
+    .tableBody td {
+        padding-top: 2px;
+        padding-bottom: 2px;
     }
 
 </style>

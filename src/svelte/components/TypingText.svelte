@@ -240,7 +240,7 @@
     .buttonRow {
         justify-content: center;
         align-items: center;
-        margin-bottom: 5%;
+        margin-bottom: 2%;
         margin-top: 10px;
         display: flex;
         flex-direction: row;
