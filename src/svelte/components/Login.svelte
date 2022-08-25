@@ -1,5 +1,5 @@
 <script>
-
+    import { Styles, Button, Icon, Popover, Badge } from "sveltestrap";
     import LoginModal from "./LoginModal.svelte";
     import RegisterModal from "./RegisterModal.svelte";
 
@@ -31,6 +31,11 @@
     }
 
 </script>
+<Styles/>
+<div class="helpButtonDiv col"><Button outline id={"btn-trigger"} color={"light"}><Icon name={'question'}></Icon></Button></div>
+<Popover trigger={'hover'} placement={'bottom'} target={'btn-trigger'} title={"Help"}>
+    <div class="helpDiv"><Badge>Tab</Badge>  Next quote</div>
+</Popover>
 
 {#if (!loggedIn)}
     <button on:click={() => handleRegisterModal()} class = "btn btn-primary col registerButton">Register</button>
@@ -41,21 +46,39 @@
 
 {#if (loggedIn)}
     <button on:click={() => logOut()} class="btn btn-primary col logoutButton">Logout</button>
-    <p class="accName col">Logged in as: {username}</p>
+    <div class="accNameDiv col"><p class="accName">Logged in as: {username}</p></div>
 
 {/if}
 
 <style>
     .accName {
         color: white;
+        white-space: nowrap;
+        margin: 0px;
+    }
+    .accNameDiv {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     .loginButton {
         margin: 10px;
     }
     .registerButton {
-        margin:10px;
+        margin: 10px;
     }
     .logoutButton {
-        margin:10px
+        margin: 10px;
+    }
+    .helpButtonDiv {
+        margin: 10px;
+        padding: 0px;
+    }
+    .helpDiv {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin: 0px;
+        padding: 0px;
     }
 </style>
