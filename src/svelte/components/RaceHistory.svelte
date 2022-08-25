@@ -5,8 +5,8 @@
     export let loggedIn;
     export let races; //use to store array of race objects.
 
-    export let avgWPM;
-    export let avgAcc;
+    // export let avgWPM;
+    // export let avgAcc;
 
     function formatDateTime (dateTimeString) {
 
