@@ -1,6 +1,6 @@
 <script>
   import { tick } from 'svelte';
-  import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'sveltestrap';
+  import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Row, Col } from 'sveltestrap';
 
   export let open = false;
   // export let showBackdrop = true;
@@ -23,20 +23,22 @@
 
 </script>
 
-<Modal size={'lg'} isOpen={open} {modalClose}>
+<Modal isOpen={open} {modalClose}>
   <ModalHeader {modalClose}>
     <div class="headerText">Race results</div>
   </ModalHeader>
   <ModalBody>
-    <div class="col textCol">
-      <div class="row">
-        Speed: {wpm} WPM
-      </div>
-      <div class="row">
-        Number of errors: {errorCount}
-      </div>
-      <div class="row">
-        Accuracy: {percentageAccuracy}%
+    <div class="modalBody">
+      <div class="raceStats">
+        <Row>
+          <Col>Speed:</Col><Col>{wpm} WPM</Col>
+        </Row>
+        <Row>
+          <Col>Accuracy:</Col><Col>{percentageAccuracy}%</Col>
+        </Row>
+        <Row>
+          <Col>Typos:</Col><Col>{errorCount}</Col>
+        </Row>
       </div>
     </div>
   </ModalBody>
@@ -47,11 +49,10 @@
 </Modal>
 
 <style>
-  .textCol {
-    margin-left: 1em;
-    font-size: xx-large;
-  }
   .headerText {
     font-size: xx-large;
+  }
+  .raceStats {
+    font-size: x-large;
   }
 </style>
