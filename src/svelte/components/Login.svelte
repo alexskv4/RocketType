@@ -80,5 +80,6 @@
         text-align: center;
         margin: 0px;
         padding: 0px;
+        font-size: large;
     }
 </style>

@@ -29,6 +29,7 @@
     let invalidText="";
     let untypedText="";
     let quote = "";
+    let quoteSource = "";
     let currentText;
     let percentageTyped = 0;
     let hasError = false;
@@ -115,6 +116,7 @@
         .then(res => res.json())
         .then((json) => {
             quote = json[0].text;
+            quoteSource = json[0].source;
             untypedText = quote;
             quoteId = json[0]._id;
         })
@@ -203,7 +205,10 @@
             <div class="progress-bar" style="width: {percentageTyped}%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
 		<div class="row quote">
-            <p><span class="valid">{validText}</span><span class="invalid">{invalidText}</span>{untypedText}</p>
+            <p class="quoteText"><span class="valid">{validText}</span><span class="invalid">{invalidText}</span>{untypedText}</p>
+        </div>
+        <div class="row">
+            <p class="quoteSourceText">- {quoteSource}</p>
         </div>
 		<div class="row">
             <input use:focusEl bind:this={inputElement} class={inputClass} id="typingInput" bind:value={currentText} on:paste={(e) => e.preventDefault()} on:keydown={(e) => checkForTab(e)} on:input={() => checkValid()}/>
@@ -274,5 +279,12 @@
     }
     p {
         font-size: x-large;
+    }
+    .quoteSourceText {
+        font-size: smaller;
+        color: rgb(67, 67, 67);
+    }
+    .quoteText {
+        margin-bottom: 5px;
     }
 </style>
