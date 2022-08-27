@@ -31,9 +31,33 @@ let userSchema = new mongoose.Schema({
     password: {
         type: String
     },
-    races: [raceSchema]
-
-
+    races: [raceSchema],
+    statistics: {
+        averageWpm: {
+            type: Number
+        },
+        recentAverageWpm: {
+            type: Number
+        },
+        highestWpm: {
+            type: Number
+        },
+        averageQuoteLength: {
+            type: Number
+        },
+        recentAverageAccuracy: {
+            type: Number
+        },
+        averageAccuracy: {
+            type: Number
+        },
+        racesCompleted: {
+            type: Number
+        },
+        timeTyping: {
+            type: Number
+        }
+    }
 });
 
 let UserModel = mongoose.model("User", userSchema);

@@ -52,7 +52,23 @@ router.post("/postRace", async (req, res) => {
             quoteId: req.body.quoteId
         };
 
+        let newStatistics = {
+            averageWpm: user.races.length == 0? race.wpm : (user.statistics.averageWpm + ((race.wpm - user.statistics.averageWpm) / (user.races.length + 1))).toFixed(2),
+            averageAccuracy: user.races.length == 0? race.percentageAccuracy : (user.statistics.averageAccuracy + ((race.percentageAccuracy - user.statistics.averageAccuracy) / (user.races.length + 1))).toFixed(2),
+            recentAverageWpm: user.races.length < 20? (user.statistics.averageWpm + ((race.wpm - user.statistics.averageWpm) / (user.races.length + 1))).toFixed(2) : getRecentAverages(user.races, race).avgWpm,
+            recentAverageAccuracy: user.races.length < 20? (user.statistics.averageAccuracy + ((race.percentageAccuracy - user.statistics.averageAccuracy) / (user.races.length + 1))).toFixed(2) : getRecentAverages(user.races, race).avgAcc,
+            // recentAverageWpm: 0,
+            // recentAverageAccuracy: 0,
+            highestWpm: user.statistics.highestWpm < race.wpm? race.wpm : user.statistics.wpm,
+            timeTyping: user.statistics.timeTyping += (race.endTime - race.startTime),
+            racesCompleted: user.statistics.racesCompleted += 1
+
+        }
+
         user.races.push(race);
+
+        user.statistics = newStatistics;
+
         user.save();
         res.status(200).send();
 
@@ -110,7 +126,17 @@ router.post("/register", async (req, res) => {
 
     const user = new UserModel({
         username: req.body.username,
-        password: hashedPassword
+        password: hashedPassword,
+        statistics: {
+            averageWpm: 0,
+            recentAverageWpm: 0,
+            highestWpm: 0,
+            averageQuoteLength: 0,
+            recentAverageAccuracy: 0,
+            averageAccuracy: 0,
+            racesCompleted: 0,
+            timeTyping: 0
+        }
     });
     try {
         await user.save();
@@ -121,5 +147,37 @@ router.post("/register", async (req, res) => {
 
 
 });
+
+router.post("/userStats", async (req, res) => {
+    try {
+        
+        let user = await UserModel.find({"username":req.body.username});
+
+        if (user[0] == null) {
+            return res.status(404).send();
+        }
+
+        res.status(200).send(user.statistics);
+
+    } catch (error) {
+        res.status(500).send();
+    }
+});
+
+function getRecentAverages (races, newRace) {
+    let avgWpm;
+    let avgAcc;
+    for (let i = 0; i < 20; i++) {
+        avgWpm += parseInt(races[races.length - i].wpm);
+        avgAcc += parseInt(races[races.length - i].percentageAccuracy);
+    }
+    avgWpm += newRace.wpm;
+    avgAcc += newRace.percentageAccuracy;
+
+    avgWpm = ((avgWpm + 0.5) / 20).toFixed(2);
+    avgAcc = ((avgAcc + 0.5) / 20).toFixed(2);
+
+    return({avgWpm, avgAcc})
+}
 
 export default router;
