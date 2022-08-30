@@ -1,10 +1,12 @@
 <script>
     import { Styles, Button, Icon, Popover, Badge } from "sveltestrap";
+import AccountStatsModal from "./AccountStatsModal.svelte";
     import LoginModal from "./LoginModal.svelte";
     import RegisterModal from "./RegisterModal.svelte";
 
     let showRegisterModal = false;
     let showLoginModal = false;
+    let showAccountStatsModal = false;
     export let loggedIn = false;
     export let username;
 
@@ -18,6 +20,10 @@
 
     function handleLoginModal () {
         showLoginModal = !showLoginModal;
+    }
+
+    function handleAccountStatsModal () {
+        showAccountStatsModal = !showAccountStatsModal;
     }
 
     function setLoggedIn (accName) {
@@ -46,15 +52,13 @@
 
 {#if (loggedIn)}
     <button on:click={() => logOut()} class="btn btn-primary col logoutButton">Logout</button>
-    <div class="accNameDiv col"><p class="accName">Logged in as: {username}</p></div>
-
+    <div class="accNameDiv col"><button on:click={() => handleAccountStatsModal()} class="btn btn-outline-light accButton" outline><Icon name={"person-circle"}/>     {username}</button></div>
+    <AccountStatsModal username={username} open={showAccountStatsModal} handleModalClose={() => handleAccountStatsModal()}></AccountStatsModal>
 {/if}
 
 <style>
-    .accName {
-        color: white;
+    .accButton {
         white-space: nowrap;
-        margin: 0px;
     }
     .accNameDiv {
         display: flex;
