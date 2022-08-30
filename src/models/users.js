@@ -39,8 +39,8 @@ let userSchema = new mongoose.Schema({
         recentAverageWpm: {
             type: Number
         },
-        highestWpm: {
-            type: Number
+        fastestRace: {
+            type: raceSchema
         },
         averageQuoteLength: {
             type: Number
