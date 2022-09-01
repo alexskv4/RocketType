@@ -4,10 +4,11 @@
 
 	let loggedIn;
 	let username;
+	let userStats;
 </script>
 
-<NavBar bind:username={username} bind:loggedIn={loggedIn}/>
-<TypingText bind:username={username} bind:loggedIn={loggedIn}/>
+<NavBar bind:userStats={userStats} bind:username={username} bind:loggedIn={loggedIn}/>
+<TypingText bind:userStats={userStats} bind:username={username} bind:loggedIn={loggedIn}/>
 
 
 

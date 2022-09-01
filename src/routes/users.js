@@ -157,7 +157,7 @@ router.post("/userStats", async (req, res) => {
             return res.status(404).send();
         }
 
-        res.status(200).send(user.statistics);
+        res.status(200).send(user[0].statistics);
 
     } catch (error) {
         res.status(500).send();

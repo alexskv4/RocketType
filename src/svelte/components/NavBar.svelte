@@ -3,6 +3,7 @@
 
 	export let loggedIn;
 	export let username;
+	export let userStats;
 </script>
 
 <nav class="navbar navbar-dark bg-dark">
@@ -16,7 +17,7 @@
 				</div>
 		</div>
 		<div class="row">
-			<Login bind:username={username} bind:loggedIn={loggedIn}/>
+			<Login userStats={userStats} bind:username={username} bind:loggedIn={loggedIn}/>
 		</div>
 	</div>
 </nav>

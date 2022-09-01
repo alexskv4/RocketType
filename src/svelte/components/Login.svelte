@@ -1,6 +1,6 @@
 <script>
     import { Styles, Button, Icon, Popover, Badge } from "sveltestrap";
-import AccountStatsModal from "./AccountStatsModal.svelte";
+    import AccountStatsModal from "./AccountStatsModal.svelte";
     import LoginModal from "./LoginModal.svelte";
     import RegisterModal from "./RegisterModal.svelte";
 
@@ -9,6 +9,7 @@ import AccountStatsModal from "./AccountStatsModal.svelte";
     let showAccountStatsModal = false;
     export let loggedIn = false;
     export let username;
+    export let userStats;
 
     
     // Make it so if you are logged in, it shows your account name and stuff, and doesnt show login button.
@@ -53,7 +54,7 @@ import AccountStatsModal from "./AccountStatsModal.svelte";
 {#if (loggedIn)}
     <button on:click={() => logOut()} class="btn btn-primary col logoutButton">Logout</button>
     <div class="accNameDiv col"><button on:click={() => handleAccountStatsModal()} class="btn btn-outline-light accButton" outline><Icon name={"person-circle"}/>     {username}</button></div>
-    <AccountStatsModal username={username} open={showAccountStatsModal} handleModalClose={() => handleAccountStatsModal()}></AccountStatsModal>
+    <AccountStatsModal userStats={userStats} open={showAccountStatsModal} handleModalClose={() => handleAccountStatsModal()}></AccountStatsModal>
 {/if}
 
 <style>

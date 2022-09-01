@@ -20,6 +20,7 @@
     let quoteId;
 
     let recentRaces=[];
+    export let userStats;
 
     let avgWPM;
     let avgAcc;
@@ -72,6 +73,13 @@
             recentRaces = data;
         })
         .then(() => getAverages());
+        
+        fetch("users/userStats", {method: "POST", headers:{"Content-Type": "application/json"}, body:strData})
+        .then(res => res.json())
+        .then((data) => {
+            console.log(data)
+            userStats = data;
+        });
     }
 
     function postRaceResult () {
